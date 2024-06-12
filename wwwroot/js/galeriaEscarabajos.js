@@ -1,7 +1,7 @@
 let galleryImages = []
 let escarabajos
 // Obtén todas las imágenes de la galería
-const uri = 'api/escarabajo'
+const uri = 'http://192.168.56.104:5001/api/escarabajo'
 
 function getCookie(name) {
     const cookieValue = document.cookie.match('(^|[^;]+)\\s*' + name + '\\s*=\\s*([^;]+)');

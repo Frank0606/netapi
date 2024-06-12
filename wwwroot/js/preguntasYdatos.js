@@ -1,4 +1,4 @@
-const uri = 'api/escarabajo'
+const uri = 'http://192.168.56.104:5001/api/escarabajo'
 
 //Obtener a los escarabajos
 let escarabajos

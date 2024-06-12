@@ -1,5 +1,5 @@
 let audioFile
-const uri = "api/file"
+const uri = "http://192.168.56.104:5001/api/file"
 
 function mostrarErrorServidor() {
     const btnCerrarSesion = document.getElementById("cerrarSesion")

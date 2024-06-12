@@ -4,14 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailInput = document.getElementById('email');
     const codigoInput = document.getElementById('codigo');
     const mensajeConfirmacion = document.getElementById('mensaje_confirmacion');
-    const uriEnviarCorreo = 'api/email/enviarCorreo';
-    const uriVerificarCodigo = 'api/email/verificarCodigo';
+    const uriEnviarCorreo = 'http://192.168.56.104:5001/api/email/enviarCorreo';
+    const uriVerificarCodigo = 'http://192.168.56.104:5001/api/email/verificarCodigo';
 
     formEmail.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = emailInput.value;
 
-        fetch(`api/email/comprobarCorreo`, {
+        fetch(`http://192.168.56.104:5001/api/email/comprobarCorreo`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,5 +1,5 @@
 //Seccion Biologos ------------------------------------------------------------------------------------------------------------- 
-const uri = 'api/biologo'
+const uri = 'http://192.168.56.104:5001/api/biologo'
 
 //Obtener a los biologos
 let biologos

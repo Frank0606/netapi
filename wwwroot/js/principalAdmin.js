@@ -9,7 +9,7 @@ const cuentaBiologos = document.getElementById("cuentaBiologos")
 contarBiologos()
 
 function contarEscarabajos(){
-    fetch("api/escarabajo", {
+    fetch("http://192.168.56.104:5001/api/escarabajo", {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + getCookie('userToken')
@@ -37,7 +37,7 @@ function contarEscarabajos(){
 }
 
 function contarBiologos(){
-    fetch("api/biologo", {
+    fetch("http://192.168.56.104:5001/api/biologo", {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + getCookie('userToken')
