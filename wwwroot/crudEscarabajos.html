@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente Web API</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body class="has-background-black">
+    <!-- Columna del encabezado y barra de navegacion -->
+    <div class="columns is-flex is-full m-0" id="divNavbarA">
+    </div>
+    <div class="bulma-container" id="ContenidoPrincipal">
+        <!-- Columna del titulo -->
+        <div class="columns has-background-black is-flex is-full m-0 mb-3">
+            <h1 class="column has-text-centered title m-4">Administración de Escarabajos</h1>
+        </div>
+        <!-- Breadcrumbs para llamar alos 2 metodos del CRUD -->
+        <nav class="breadcrumb is-centered has-bullet-separator is-size-5" aria-label="breadcrumbs">
+            <ul>
+                <li id="breadcrumbMostrar" class="is-active"><a onclick=openModalMostrar()>Mostrar</a></li>
+                <li id="breadcrumbAgregar"><a onclick=openModalAgregar()>Agregar</a></li>
+            </ul>
+        </nav>
+        <!-- Modales extras -->
+        <!-- Modal de imagenes -->
+        <div class="modal" id="modalImagenes">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head has-text-centered">
+                    <p class="modal-card-title has-text-weight-bold has-text-white">Imagenes</p>
+                    <button id="cerrarModalImagenes" aria-label="close" class="delete"></button>
+                </header>
+                <section class="modal-card-body" id="bodyModalImagenes">
+
+                </section>
+                <footer class="modal-card-foot">
+
+                </footer>
+            </div>
+        </div>
+        <!-- Modal de audios -->
+        <div class="modal" id="modalAudios">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head has-text-centered">
+                    <p class="modal-card-title has-text-weight-bold has-text-white">Audios</p>
+                    <button id="cerrarModalAudios" aria-label="close" class="delete"></button>
+                </header>
+                <section class="modal-card-body" id="bodyModalAudios">
+
+                </section>
+                <footer class="modal-card-foot">
+
+                </footer>
+            </div>
+        </div>
+        <!-- Columna del CRUD Escarabajo -->
+        <div class="columns is-centered">
+            <!-- Tabla de mostrar a los escarabajos -->
+            <div class="column p-6 mx-6" style="overflow-x: scroll;">
+                <div class="has-text-centered">
+                    <h2 class="subtitle has-text-weight-bold has-text-white is-size-4">Mostrar</h2>
+                </div>
+                <div>
+                    <p id="contador" class="mb-4 has-text-weight-bold has-text-white is-size-5"></p>
+                </div>
+                <table class="table is-fullwidth is-fullheight is-bordered is-striped">
+                    <tr class="has-background-grey-dark is-size-5">
+                        <th class="has-text-centered">Especie</th>
+                        <th class="has-text-centered">Familia</th>
+                        <th class="has-text-centered">Genero</th>
+                        <th class="has-text-centered">Patas</th>
+                        <th class="has-text-centered">Torax</th>
+                        <th class="has-text-centered">Ciclo de vida</th>
+                        <th class="has-text-centered">Nombre comun</th>
+                        <th class="has-text-centered">Antena</th>
+                        <th class="has-text-centered">Ojos</th>
+                        <th class="has-text-centered">Mandibula</th>
+                        <th class="has-text-centered">Alas</th>
+                        <th class="has-text-centered">Elitros</th>
+                    </tr>
+                    <tbody id="mostrarEscarabajos"></tbody>
+                </table>
+            </div>
+            <!-- Modal de agregar Escarabajo -->
+            <div class="modal" id="agregarEscarabajo">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head has-text-centered">
+                        <p class="modal-card-title has-text-weight-bold has-text-white">Agregar</p>
+                        <button id="cerrarModalAgregar" aria-label="close" class="delete"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <form id="formAgregarEscarabajo" method="post" class="p-5">
+                            <div class="field">
+                                <label class="label">Especie</label>
+                                <div class="control">
+                                    <input type="text" id="especieEscarabajo" placeholder="Especie" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Familia</label>
+                                <div class="control">
+                                    <input type="text" id="familiaEscarabajo" placeholder="Familia" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Genero</label>
+                                <div class="control">
+                                    <input type="text" id="generoEscarabajo" placeholder="Genero" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Patas</label>
+                                <div class="control">
+                                    <input type="number" id="patasEscarabajo" placeholder="Patas" class="input" max="9" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Torax</label>
+                                <div class="control">
+                                    <input type="text" id="toraxEscarabajo" placeholder="Torax" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Ciclo de vida</label>
+                                <div class="control">
+                                    <input type="text" id="ciclo_vidaEscarabajo" placeholder="Cliclo de vida"
+                                        class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Nombre común</label>
+                                <div class="control">
+                                    <input type="text" id="nombre_comunEscarabajo" placeholder="Nombre comun"
+                                        class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Antena</label>
+                                <div class="control">
+                                    <input type="number" id="antenaEscarabajo" placeholder="Antena" class="input" max="9" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Ojos</label>
+                                <div class="control">
+                                    <input type="text" id="ojosEscarabajo" placeholder="Ojos" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Mandibula</label>
+                                <div class="control">
+                                    <input type="text" id="mandibulaEscarabajo" placeholder="Mandibula" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Alas</label>
+                                <div class="control">
+                                    <input type="text" id="alasEscarabajo" placeholder="Alas" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Elitros</label>
+                                <div class="control">
+                                    <input type="text" id="elitrosEscarabajo" placeholder="Elitros" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Descripcion</label>
+                                <div class="control">
+                                    <input type="text" id="descripcionEscarabajo" placeholder="Descripcion"
+                                        class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Audios</label>
+                                <div class="file has-name is-fullwidth">
+                                    <label class="file-label">
+                                        <input type="file" class="file-input" name="audio" accept="audio/wav"
+                                            id="audioInput">
+                                        <span class="file-cta has-background-primary-soft">
+                                            <span class="file-icon">
+                                                <i class="fas fa-upload"></i>
+                                            </span>
+                                            <span class="file-label has-text-centered">Subir audio</span>
+                                        </span>
+                                        <span class="file-nameA"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="audio-preview" id="audio-preview" style="display: none;">
+                                <audio controls></audio>
+                            </div>
+                            <div class="field">
+                                <label class="label">Imágenes</label>
+                                <div class="file has-name is-fullwidth">
+                                    <label class="file-label">
+                                        <input id="imageInput" type="file" class="file-input" name="imagen" accept="image/*">
+                                        <span class="file-cta has-background-primary-soft">
+                                            <span class="file-icon">
+                                                <i class="fas fa-upload"></i>
+                                            </span>
+                                            <span class="file-label has-text-centered">Subir imágenes</span>
+                                        </span>
+                                        <span class="file-nameI"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="image-preview" style="display: none;">
+                                <img id="preview-image" src="" alt="Vista previa de la imagen">
+                            </div>
+                            <div class="field">
+                                <label class="label">Coordenadas</label>
+                                <div class="control">
+                                    <input type="text" id="coordenadasEscarabajo" placeholder="Coordenadas"
+                                        class="input">
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <div class="field is-grouped is-grouped-centered">
+                            <p class="control">
+                                <input type="submit" value="Agregar" class="button is-primary is-outlined"
+                                    form="formAgregarEscarabajo">
+                            </p>
+                            <p class="control">
+                                <input type="button" value="Borrar" class="button is-light is-outlined"
+                                    id="btnBorrarFormAgregar">
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+            <!-- Modal de editar escarabajo -->
+            <div class="modal" id="editarForm">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head has-text-centered">
+                        <p class="modal-card-title has-text-weight-bold has-text-white">Editar</p>
+                        <button id="cerrarModalEditar" aria-label="close" class="delete"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <form id="formEditar" class="p-5">
+                            <div class="field">
+                                <label for="" class="label">Especie</label>
+                                <div class="control">
+                                    <input type="text" id="editarEspecie" class="input" placeholder="Especie" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Familia</label>
+                                <div class="control">
+                                    <input type="text" id="editarFamilia" class="input" placeholder="Familia" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Genero</label>
+                                <div class="control">
+                                    <input type="text" id="editarGenero" class="input" placeholder="Genero" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Patas</label>
+                                <div class="control">
+                                    <input type="text" id="editarPatas" class="input" placeholder="Patas" maxlength="1" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Torax</label>
+                                <div class="control">
+                                    <input type="text" id="editarTorax" class="input" placeholder="Torax" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Ciclo de vida</label>
+                                <div class="control">
+                                    <input type="text" id="editarCiclo_vida" class="input" placeholder="Ciclo de vida" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Nombre comun</label>
+                                <div class="control">
+                                    <input type="text" id="editarNombre_comun" class="input" placeholder="Nombre comun" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Antena</label>
+                                <div class="control">
+                                    <input type="text" id="editarAntena" class="input" placeholder="Antena" maxlength="1" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Ojos</label>
+                                <div class="control">
+                                    <input type="text" id="editarOjos" class="input" placeholder="Ojos" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Mandibula</label>
+                                <div class="control">
+                                    <input type="text" id="editarMandibula" class="input" placeholder="Mandibula" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Alas</label>
+                                <div class="control">
+                                    <input type="text" id="editarAlas" class="input" placeholder="Alas" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Elitros</label>
+                                <div class="control">
+                                    <input type="text" id="editarElitros" class="input" placeholder="Elitros" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="" class="label">Descripcion</label>
+                                <div class="control">
+                                    <input type="text" id="editarDescripcion" class="input" placeholder="Descripcion" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Audios</label>
+                                <div class="file has-name is-fullwidth">
+                                    <label class="file-label">
+                                        <input type="file" class="file-input" name="audio" accept="audio/wav"
+                                            id="editarAudios">
+                                        <span class="file-cta has-background-primary-soft">
+                                            <span class="file-icon">
+                                                <i class="fas fa-upload"></i>
+                                            </span>
+                                            <span class="file-label has-text-centered">Subir audio</span>
+                                        </span>
+                                        <span class="file-nameA"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="audio-preview" id="audio-preview" style="display: none;">
+                                <audio controls></audio>
+                            </div>
+                            <div class="field">
+                                <label class="label">Imágenes</label>
+                                <div class="file has-name is-fullwidth">
+                                    <label class="file-label">
+                                        <input id="editarImagenes" type="file" class="file-input" name="imagen"
+                                            accept="image/*">
+                                        <span class="file-cta has-background-primary-soft">
+                                            <span class="file-icon">
+                                                <i class="fas fa-upload"></i>
+                                            </span>
+                                            <span class="file-label has-text-centered">Subir imágenes</span>
+                                        </span>
+                                        <span class="file-nameI"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Coordenadas</label>
+                                <div class="control">
+                                    <input type="text" id="editarCoordenadas" placeholder="Coordenadas" class="input">
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <input type="submit" value="Guardar"
+                                    class="button is-primary is-outlined has-text-weight-bold" form="formEditar">
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./js/encabezadoA.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+<script src="./js/escarabajosJS.js"></script>
+<script src="./js/cerrarSesion.js"></script>
+<script src="./js/audiosPreview.js"></script>
+<script src="./js/footer.js"></script>
+</html>

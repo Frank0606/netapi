@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pagina Principal - Administrador</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body class="has-background-black">
+    <!-- contenedor completo -->
+    <div class="bulma-container">
+        <!-- Columnas del navbar -->
+        <div class="columns is-flex is-full m-0" id="divNavbarA">
+        </div>
+        <!-- Columnas del contenido principal -->
+        <div class="columns m-0 has-background-white" id="ContenidoPrincipal">
+            <!-- contenedor principal de informacion -->
+            <div class="column is-one-third is-responsive is-align-content-center"
+                style="height: 40rem; padding-top: 10rem; padding-bottom: 10rem;">
+                <div class="label">
+                    <p class="has-text-black px-6 is-size-3 has-text-centered">Bienvenido Dr. Edwin</p>
+                </div>
+                <p class="has-text-black px-6 is-size-5 has-text-centered" id="cuentaEscarabajos"></p>
+                <p class="has-text-black px-6 is-size-5 has-text-centered" id="cuentaBiologos"></p>
+            </div>
+            <!-- contenedor del lado derecho, informacion secundaria, datos extras, acciones -->
+            <div class="column has-background-black is-two-thirds m-0 p-0">
+                <figure class="image" style="height: 100%;">
+                    <img src="./css/resources/images/paginaPrincipal_1.webp" alt="Especie" class="is-fullwidth"
+                        style="height: 100%; object-fit: cover;">
+                </figure>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./js/encabezadoA.js"></script>
+<script src="./js/cerrarSesion.js"></script>
+<script src="./js/footer.js"></script>
+<script src="./js/principalAdmin.js"></script>
+</html>

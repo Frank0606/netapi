@@ -1,0 +1,59 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('./resources/images/backgroundInicioSesion.webp') no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+}
+
+.login-container {
+    width: 420px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    padding: 30px 40px;
+}
+
+.login-container .title {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.login-container .field {
+    margin-bottom: 20px;
+
+}
+
+.login-container .icon {
+    font-size: 20px;
+    top: 50% !important;
+    transform: translateY(-50%);
+}
+
+.login-container .button {
+    background-color: #fff; 
+    color: #333; 
+    font-weight: 600;
+}
+
+.field a {
+    color: #00d1b2;
+}
+
+.swal-button {
+    background-color: #006657;
+    color: white;
+}
+
+.swal-text {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-align: center;
+}

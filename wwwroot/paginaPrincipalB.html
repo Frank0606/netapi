@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pagina Principal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body class="has-background-light">
+    <!-- Columnas del navbar -->
+    <div class="columns is-flex is-full m-0" id="divNavbar">
+    </div>
+    <!-- contenedor completo -->
+    <div class="bulma-container" id="ContenidoPrincipal">
+        <!-- Columnas del contenido principal -->
+        <div class="columns m-0 has-background-white">
+            <!-- contenedor principal de informacion -->
+            <div class="column is-one-third is-responsive"
+                style="height: 40rem; padding-top: 10rem; padding-bottom: 10rem;">
+                <div class="label">
+                    <p class="has-text-black px-6 is-size-3">Puedes buscar entre todas las especies que tenemos
+                        registradas hasta hoy en nuestra página.</p>
+                </div>
+                <div class="field has-addons has-addons-centered mt-6 busqueda">
+                    <div class="control">
+                        <input placeholder="Buscar especie" class="input is-large has-background-white has-text-black"
+                            type="text" id="campoBusqueda">
+                        <ul id="sugerencia" class="menu-list"></ul>
+                    </div>
+                    <div class="control">
+                        <button class="button has-background-primary-soft is-large" id="botonBusqueda">Buscar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- contenedor del lado derecho, informacion secundaria, datos extras, acciones -->
+            <div id="carousel" class="carousel" style="position: relative; width: 100%; height: auto;">
+                <img class="img-fluid mx-auto" src="./css/resources/images/paginaPrincipal_1.webp" alt="IMG" style="width: 100%; height: auto;">
+                <div class="content pb-4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: right; align-items:last baseline;" id="divContent">
+                    <div style="padding: .395rem 2.75rem !important; font-size: 1.2rem !important;" id="audioContainer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns has-background-grey-lighter m-0" id="divDatos">
+            <div class="column is-flex is-justify-content-center py-6" style="height: 10rem;">
+                <label class="label has-text-black is-size-2">¿Como suenan los escarabajos?</label>
+            </div>
+        </div>
+
+        <div id="slider" class="mb-6 mt-6">
+
+        </div>
+        <script defer src="js/preguntasYdatos.js" asp-append-version="true"></script>
+        <script>
+            const cssLink = document.createElement('link');
+            cssLink.rel = 'stylesheet';
+            cssLink.href = './css/style.css';
+
+            document.head.appendChild(cssLink);
+        </script>
+</body>
+<script src="./js/encabezado.js"></script>
+<script src="./js/cerrarSesion.js"></script>
+<script src="./js/footer.js"></script>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente Web API</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body class="has-background-black">
+    <!-- Columna del encabezado y barra de navegacion -->
+    <div class="columns is-flex is-full m-0" id="divNavbarA">
+    </div>
+    <div class="bulma-container" id="ContenidoPrincipal">
+        <!-- Columna del titulo -->
+        <div class="columns has-background-black is-flex is-full m-0 mb-3">
+            <h1 class="column has-text-centered title m-4">Administración de Biologos</h1>
+        </div>
+        <!-- Breadcrumbs para llamar alos 2 metodos del CRUD -->
+        <nav class="breadcrumb is-centered has-bullet-separator is-size-5" aria-label="breadcrumbs">
+            <ul>
+                <li id="breadcrumbMostrar" class="is-active"><a onclick=openModalMostrar()>Mostrar</a></li>
+                <li id="breadcrumbAgregar"><a onclick=openModalAgregar()>Agregar</a></li>
+            </ul>
+        </nav>
+        <!-- Columna del CRUD biologo -->
+        <div class="columns is-centered">
+            <!-- Tabla de mostrar a los biologos -->
+            <div class="column p-6 mx-6" style="overflow-x: hidden;">
+                <div class="has-text-centered">
+                    <h2 class="subtitle has-text-weight-bold has-text-white is-size-4">Mostrar</h2>
+                </div>
+                <div>
+                    <p id="contador" class="mb-4 has-text-weight-bold has-text-white is-size-5"></p>
+                </div>
+                <table class="table is-fullwidth is-fullheight is-bordered is-striped">
+                    <tr class="has-background-grey-dark is-size-5">
+                        <th class="has-text-centered">Nombre</th>
+                        <th class="has-text-centered">Correo</th>
+                        <th class="has-text-centered">Edad</th>
+                        <th class="has-text-centered">Telefono</th>
+                    </tr>
+                    <tbody id="mostrarBiologos"></tbody>
+                </table>
+            </div>
+            <!-- Modal de agregar biologo -->
+            <div class="modal" id="agregarBiologo">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head has-text-centered">
+                        <p class="modal-card-title has-text-weight-bold has-text-white">Agregar</p>
+                        <button id="cerrarModalAgregar" aria-label="close" class="delete"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <form id="formAgregarBiologo" method="post" class="p-5">
+                            <div class="field">
+                                <label class="label">Nombre</label>
+                                <div class="control">
+                                    <input type="text" id="nombreBiologo" placeholder="Nombre" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Correo</label>
+                                <div class="control">
+                                    <input type="email" id="correoBiologo" placeholder="Correo" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Edad</label>
+                                <div class="control">
+                                    <input type="number" id="edadBiologo" placeholder="Edad" class="input" maxlength="2"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Telefono</label>
+                                <div class="control">
+                                    <input type="number" id="telefonoBiologo" placeholder="Telefono" class="input"
+                                        minlength="10" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Contraseña</label>
+                                <div class="control">
+                                    <input type="password" id="contrasenaBiologo" placeholder="Contraseña" class="input"
+                                        required minlength="8" pattern="(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}">
+                                    <span id="passwordError" class="error is-size-6">La contraseña debe tener al menos 8
+                                        caracteres, incluir al menos un número y una mayúscula.</span>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <div class="field is-grouped is-grouped-centered">
+                            <p class="control">
+                                <input type="submit" value="Agregar" class="button is-primary is-outlined"
+                                    form="formAgregarBiologo">
+                            </p>
+                            <p class="control">
+                                <input type="button" value="Borrar" class="button is-light is-outlined"
+                                    id="btnBorrarFormAgregar">
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+            <!-- Modal de editar biologo -->
+            <div class="modal" id="editarForm">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head has-text-centered">
+                        <p class="modal-card-title has-text-weight-bold has-text-white">Editar</p>
+                        <button id="cerrarModalEditar" aria-label="close" class="delete"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <form id="formEditar" class="p-5">
+                            <input type="hidden" id="editarId">
+                            <div class="field">
+                                <label class="label">Nombre</label>
+                                <div class="control">
+                                    <input type="text" id="editarNombre" class="input" placeholder="Nombre" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Correo</label>
+                                <div class="control">
+                                    <input type="email" id="editarCorreo" class="input" placeholder="Correo" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Edad</label>
+                                <div class="control">
+                                    <input type="number" id="editarEdad" class="input" placeholder="Edad" maxlength="2"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Telefono</label>
+                                <div class="control">
+                                    <input type="number" id="editarTelefono" class="input" placeholder="Telefono"
+                                        maxlength="10" required>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <input type="submit" value="Guardar"
+                                    class="button is-primary is-outlined has-text-weight-bold" form="formEditar">
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./js/encabezadoA.js"></script>
+<script src="js/biologosJS.js"></script>
+<script src="./js/cerrarSesion.js"></script>
+<script src="./js/footer.js"></script>
+</html>

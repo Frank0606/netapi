@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de especies</title>
+</head>
+
+<body>
+    <!-- Columnas del navbar -->
+    <div class="columns is-flex is-full m-0" id="divNavbar">
+    </div>
+    <!-- Filtro -->
+    <div id="div_filtro_gallery" class="columns is-multiline is-mobile is-centered m-0 mt-3 pb-3" style="border-bottom: 8px solid #006657;">
+        <div class="column has-text-centered is-align-content-center" id="div_titulo_filtro">
+            <p class="has-text-white is-size-3 has-text-weight-bold">Filtrar por:</p>
+        </div>
+        <br>
+        <br>
+        <!-- Filtro por familia -->
+        <div class="column is-one-fifth">
+            <div class="field">
+                <label class="label">Familia</label>
+                <div class="control">
+                    <input class="input" type="text" id="filtroFamilia" placeholder="Ingrese una familia"
+                        oninput="aplicarFiltros()">
+                </div>
+            </div>
+        </div>
+        <!-- Filtro por cantidad de patas -->
+        <div class="column is-one-fifth">
+            <div class="field">
+                <label class="label">Cantidad de patas</label>
+                <div class="control">
+                    <input class="input" type="number" id="filtroPatas" placeholder="Ingrese la cantidad de patas">
+                </div>
+            </div>
+        </div>
+        <!-- Filtro por cantidad de antenas -->
+        <div class="column is-one-fifth">
+            <div class="field">
+                <label class="label">Cantidad de antenas</label>
+                <div class="control">
+                    <input class="input" type="number" id="filtroAntenas" placeholder="Ingrese la cantidad de antenas">
+                </div>
+            </div>
+        </div>
+        <!-- Filtro por estado de investigación -->
+        <div class="column is-one-fifth">
+            <div class="field">
+                <label class="label">Estado de investigación</label>
+                <div class="control">
+                    <div class="select">
+                        <select id="filtroInvestigacion">
+                            <option value="">Todos</option>
+                            <option value="1">Aprobado</option>
+                            <option value="0">No aprobado</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- contenido -->
+    <div id="div_gallery" class="columns is-multiline is-mobile is-centered m-0"></div>
+
+    <!-- Modal de ficha tecnica del escarabajo -->
+    <div id="modal" class="modal p-0 m-0">
+
+        <!-- Seleccion del fondo del modal -->
+        <div class="modal-background has-background-black"></div>
+
+        <!-- Contenido del modal -->
+        <div class="modal-content columns" style="width: 90%; height: 100%; overflow-x:hidden;">
+
+            <!-- Columna de las imagenes -->
+            <div id="columna_imagen" class="column is-one-third">
+                <!-- Div de las imagenes -->
+                <div id="columna_fotos"></div>
+            </div>
+
+            <!-- Columna de Información -->
+            <div id="columna_info" class="column is-one-third">
+                <!-- Titulo -->
+                <p class="has-text-white is-size-3 has-text-centered mb-5 has-text-weight-bold">Información</p>
+                <!-- Div con la descripcion de escarabajo -->
+                <div id="div-info" class="mb-5"></div>
+                <!-- Div con uno de sus audios aleatorios -->
+                <div id="div-audio"></div>
+                <!-- Div del boton para descargar algun recurso -->
+                <div id="div_btn_descargar" class="is-flex is-justify-content-center is-align-items-center">
+                    <button class="button is-success" id="btnDescargarEspecie">Descargar</button>
+                </div>
+            </div>
+
+            <!-- Columna con el mapa y estado de investigacion -->
+            <div id="columna_mapa" class="column is-one-third">
+                <!-- Titulo -->
+                <p class="has-text-white is-size-3 has-text-centered mb-5 has-text-weight-bold">Mapa</p>
+                <!-- Div del mapacon los puntos de las coordenadas -->
+                <div id="map" style="height: 70%; width: 100%;"></div>
+                <!-- Div de la barra del estado de progreso -->
+                <div id="div-investigacion" class="" style="width: 80%; margin: 0 auto;">
+                    <!-- Titulo de la investigacion -->
+                    <p id="titulo_nivel_investigacion"
+                        class="has-text-white has-text-centered has-text-weight-bold is-size-5 mb-4">Nivel de
+                        investigación</p>
+                    <!-- Barra de estado -->
+                    <progress id="id_barra_investigacion" class="progress is-success is-medium mb-4"
+                        max="100"></progress>
+                    <!-- Div para apuntar si esta aprobado o no el escarabajo -->
+                    <div class="columns">
+                        <div class="column">
+                            <p class="has-text-white is-inline-block is-pulled-left">No aprobado</p>
+                        </div>
+                        <div class="column">
+                            <p class="has-text-white is-inline-block is-pulled-right">Aprobado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Boton para cerrar el modal -->
+        <button class="modal-close is-large" aria-label="close" onclick="closeModal()"></button>
+    </div>
+
+    <!-- Modal del boton descargar Recursos -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head has-text-white has-background-primary-soft">
+                <p class="modal-card-title" class="has-text-weight-bold">Seleccione los elementos a descargar</p>
+                <button class="delete" aria-label="close" id="closeModal" onclick="closeModalDescargas()"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="columns">
+                    <div class="column is-half">
+                        <div class="field">
+                            <div class="control">
+                                <label class="checkbox is-size-5">
+                                    <input type="checkbox" id="audioCheckbox" class="mr-2">
+                                    Audio
+                                </label>
+                            </div>
+                        </div>
+                        <!-- <div class="field">
+                            <div class="control">
+                                <label class="checkbox is-size-5">
+                                    <input type="checkbox" id="spectrogramCheckbox" class="mr-2">
+                                    Espectograma
+                                </label>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="column is-half">
+                        <div class="field">
+                            <div class="control">
+                                <label class="checkbox is-size-5">
+                                    <input type="checkbox" id="imagesCheckbox" class="mr-2">
+                                    Imágenes
+                                </label>
+                            </div>
+                        </div>
+                        <!-- <div class="field">
+                            <div class="control">
+                                <label class="checkbox is-size-5">
+                                    <input type="checkbox" id="techSheetCheckbox" class="mr-2">
+                                    Ficha técnica (.txt)
+                                </label>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" id="downloadButton">Descargar</button>
+            </footer>
+        </div>
+    </div>
+</body>
+<script src="./js/encabezado.js"></script>
+<script src="./js/galeriaEscarabajos.js"></script>
+<script src="./js/cerrarSesion.js"></script>
+<script src="./js/footer.js"></script>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Clasificador</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+</head>
+
+<body class="has-background-black">
+    <!-- Columna del encabezado y barra de navegacion -->
+    <div class="columns is-flex is-full m-0" id="divNavbar">
+    </div>
+    <div class="bulma-container" id="ContenidoPrincipal">
+        <!-- Columna del titulo -->
+        <div class="columns has-background-black is-flex is-full m-0 mb-3">
+            <h1 class="column has-text-centered title m-4">Clasificador de Audios de Escarabajos</h1>
+        </div>
+        <!-- Contenedor principal de la subida de informacion de los audios -->
+        <div class="section">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-half px-6">
+                        <!-- Titulo de cargar el audio -->
+                        <div class="mb-5 has-text-centered">
+                            <label class="is-size-3 has-text-weight-bold has-text-white">Cargar audio</label>
+                        </div>
+                        <!-- Input del biologo -->
+                        <div class="">
+                            <label for="biologoClasificar" class="label py-2 m-0">Biologo</label>
+                            <input type="text" name="biologoClasificar" id="biologoClasificar" class="input"
+                                style="width: 70%;" disabled>
+                        </div>
+                        <!-- Input de coordenadas -->
+                        <div class="">
+                            <label for="coordenadasClasificar" class="label py-2 m-0">Coordenadas</label>
+                            <input type="text" name="coordenadasClasificar" id="coordenadasClasificar"
+                                placeholder="Coordenadas" class="input" style="width: 70%;">
+                        </div>
+                        <!-- Input de audio a clasificar -->
+                        <label class="label py-2 m-0">Audio</label>
+                        <div class="file has-name is-fullwidth pb-2 m-0">
+                            <label class="file-label" style="width: 70%;">
+                                <input type="file" class="file-input" name="audio" id="audioInput">
+                                <span class="file-cta has-background-primary-soft">
+                                    <span class="file-icon">
+                                        <i class="fas fa-upload"></i>
+                                    </span>
+                                    <span class="file-label has-text-centered">Subir audio</span>
+                                </span>
+                                <span class="file-name" id="fileName"></span>
+                            </label>
+                        </div>
+
+                        <div class="audio-preview" id="audio-preview" style="display: none;">
+                            <audio controls></audio>
+                        </div>
+
+                        <div class="field mt-6 has-text-centered">
+                            <button class="button is-normal has-background-primary-soft"
+                                id="btnClasificar">Clasificar</button>
+                        </div>
+                    </div>
+
+                    <div class="column is-hidden">
+                        <div class="panel">
+                            <p class="panel-heading is-size-3 p-4 has-text-centered" style="background-color: #006657;">
+                                Resultados</p>
+                            <div class="panel-block">
+                                <img src="./css/resources/images/escarabajo1.webp" alt="Escarabajo"
+                                    class="image is-fullwidth">
+                            </div>
+                            <div class="panel-block">
+                                <div class="columns" style="width: 100%;">
+                                    <div class="column is-half">
+                                        <p>Guatematensis</p>
+                                    </div>
+                                    <div class="column is-half">
+                                        <p class="has-text-right">80%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="column is-two-thirds is-hidden">
+                        <div class="results-container">
+                            <h2 class="subtitle is-size-3 has-text-white has-text-weight-bold">Resultados</h2>
+                            <img src="imagen.jpg" alt="Imagen de escarabajo" id="imagen-resultado">
+                            <p id="porcentaje">Porcentaje de certeza:</p>
+                            <p id="tipo-escarabajo">Tipo de escarabajo:</p>
+                            <div class="buttons">
+                                <button class="button is-normal has-background-primary-soft"
+                                    id="btn-guardar">Guardar</button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./js/encabezado.js"></script>
+<script src="./js/cerrarSesion.js"></script>
+<script src="./js/audiosPreview.js"></script>
+<script src="./js/footer.js"></script>
+<script src="./js/clasificador.js"></script>
+</html>
